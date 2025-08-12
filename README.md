@@ -1,106 +1,97 @@
-# Music Composer Classification Using Deep Learning
-
-This project classifies music composers — Bach, Beethoven, Chopin, and Mozart — based on their musical pieces using deep learning techniques such as CNN and LSTM.
-
----
+# Music Genre and Composer Classification Using Deep Learning
 
 ## Project Overview
 
-The goal is to accurately predict the composer of a given piece of music by extracting features from MIDI files and training neural network models.
+This project focuses on classifying classical music compositions by composer using deep learning techniques. Specifically, it predicts the composer of a given MIDI musical score from four famous composers:
+
+- Johann Sebastian Bach
+- Ludwig van Beethoven
+- Frédéric Chopin
+- Wolfgang Amadeus Mozart
+
+Two deep learning approaches are implemented:
+
+- **LSTM-based model:** Uses sequential features extracted from the main melody line.
+- **CNN-based model:** Uses piano-roll image representations of the music.
+
+Both models leverage symbolic music processing and provide complementary strengths in classification.
 
 ---
 
-## Getting Started
+## Libraries Used
 
-Follow these steps to prepare your data, extract features, and train the model.
-
-### 1. Download Dataset from Kaggle
-
-- Go to [Kaggle](https://www.kaggle.com/) and download the dataset from path `blanderbuss/midi-classic-music` to get the zip file `midclassics_filtered.zip`.
-- Upload the ZIP file to your Colab environment.
-
-### 2. Unzip and Organize Dataset
-
-- Unzip the dataset into your working directory.
-- The dataset should contain folders for each composer (`Bach`, `Beethoven`, `Chopin`, `Mozart`).
-
-### 3. Clean Composer Folders
-
-- Use the provided `clean_composer_folder` function to:
-  - Move all MIDI files to the top-level composer folder.
-  - Remove any subfolders.
-  - Delete non-MIDI files.
-
-This step ensures that each composer folder contains only `.mid` files directly.
-
-### 4. Feature Extraction
-
-- Run the feature extraction script to:
-  - Convert MIDI files to audio.
-  - Extract MFCC features from the audio.
-  - Save the features and labels in a JSON file or CSV for neural network training.
-
-### 5. Load Data and Prepare for Model Training
-
-- Load the extracted features and labels into your environment.
-- Prepare train, validation, and test splits.
-
-### 6. Train CNN/LSTM Models
-
-- Build and compile the CNN and/or LSTM models.
-- Train the model using the prepared datasets.
-- Evaluate model performance using accuracy and other metrics.
+| Library      | Purpose                     | Logo                                                                                                 |
+| ------------ | --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| TensorFlow   | Deep Learning framework     | ![TensorFlow](https://img.shields.io/badge/TensorFlow-F34F29?logo=tensorflow&logoColor=white)        |
+| PyTorch      | Deep Learning framework     | ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)                 |
+| NumPy        | Numerical computing         | ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)                       |
+| PrettyMIDI   | MIDI processing             | ![PrettyMIDI](https://img.shields.io/badge/PrettyMIDI-Blue?logo=music)                               |
+| miditoolkit  | MIDI processing toolkit     | ![miditoolkit](https://img.shields.io/badge/miditoolkit-Blue?logo=music)                             |
+| Matplotlib   | Plotting and visualization  | ![Matplotlib](https://img.shields.io/badge/Matplotlib-F37626?logo=matplotlib&logoColor=white)        |
+| scikit-learn | Data preprocessing, metrics | ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikit-learn&logoColor=white) |
 
 ---
 
-## How to Use This Project
+## Setup Instructions
 
-1. Download and unzip dataset.
+### 1. **Clone the repository**
 
-2. Upload folders for each composer to your working directory.
+```bash
+git clone https://github.com/PKinginlife/music-composer-classification.git
+cd music-composer-classification
+```
 
-3. Run the cleaning function on each composer folder to organize files properly.
+### 2. **Install dependencies**
 
-4. Execute the feature extraction script to create MFCC datasets.
+Make sure you have Python 3.7+ installed. Then run:
 
-5. Load the dataset into your training script and train the CNN/LSTM model.
+```bash
+# for jupyter notebook on your local
+pip install -r requirements.txt
+```
 
----
+### 3. **Get Dataset**
 
-## Requirements
+- The MCC_Dataset folder contains the MIDI files downloaded and unzipped from Kaggle.
+- If the dataset folder is missing, you can download the MCC Dataset from [Kaggle](https://www.kaggle.com/) path `blanderbuss/midi-classic-music` and unzip the zipped file `midclassics_filtered.zip` into the MCC_Dataset directory inside the project root.
 
-- Python 3.x
-- Libraries:
-  - `librosa`
-  - `soundfile`
-  - `tensorflow`
-  - `tqdm`
-  - `numpy`
-  - `json`
-  - `shutil`
-  - `os`
-  - `subprocess`
-  - `tempfile`
+### 4. **Run the notebooks/scripts**
 
-Make sure to install required libraries using pip if not already installed.
+All code for data processing, model training, and evaluation for both the LSTM and CNN models is consolidated in the notebook.
 
----
+```bash
+jupyter notebook Final_Project_MCC.ipynb
+```
 
-## Acknowledgments
-
-- MIDI to audio rendering using **TiMidity++**.
-- Feature extraction via **Librosa**.
-- Deep learning built with **TensorFlow/Keras**.
+You can run the notebook either locally or in Google Colab.
 
 ---
 
-## Future Improvements
+## Project Structure
 
-- Implement data augmentation techniques to increase dataset size.
-- Explore more complex architectures like Transformer models.
-- Use additional musical features such as tempo and chords.
-- Deploy the trained model as a web service for real-time classification.
+```grapghql
+├── MCC_Dataset/               # Dataset folder with MIDI files
+├── Final_project_MCC.ipynb    # Notebook for LSTM & CNN composer classification
+├── requirements.txt           # Python dependencies
+└── README.md                  # This file
+```
 
 ---
 
-Feel free to contribute, open issues, or suggest improvements!
+## Conclusion and Future Considerations
+
+Both LSTM and CNN models performed well, each with unique strengths, but there is room for improvement to boost generalization and ballance class performance.
+.
+
+### Future Improvements
+
+- Combine CNN and LSTM/Transformer to capture both local motifs and long-range dependencies. s
+- Use MIDI-specific augmentations like pitch transposition, tempo scaling, and velocity jitter.
+- Include multi-track/polyphonic context to capture richer stylistic cues.
+- Add symbolic features such as key signatures, chords, and rhythmic complexity.
+- Address class imbalance with balanced loss functions or re-weighted sampling.
+- Expand dataset size to improve generalization and reduce overfitting.
+- Incorporate musicological metrics (motif similarity, stylistic clustering) beyond accuracy.
+- Encode instrumentation features (program numbers, instrument families) for better discrimination.
+
+These steps can help build more robust and meaningful composer classification models.
